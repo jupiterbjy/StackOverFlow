@@ -1,0 +1,22 @@
+omer| (stmt : 0) | adminT|  Connection id - 0
+omer| (stmt : 0) | adminT|  Start Time - 2018-11-06 16:52:01
+omer| (stmt : 0) | adminT|  Statement create or replace table amit (x date);
+omer| (stmt : 0)| adminT|  Connection id - 0 - Executing - create or replace table amit (x date);
+omer| (stmt : 0) | adminT|  Connection id - 0
+omer| (stmt : 0) | adminT|  End Time - 2018-11-06 16:52:01
+omer| (stmt : 0) | adminT|  SQL - create or replace table amit (x date);
+omer| (stmt : 0) | adminT|  Success
+admin| (stmt : 1) | adminT|  Connection id - 0
+admin| (stmt : 1) | adminT|  Start Time - 2018-11-06 16:52:14
+admin| (stmt : 1) | adminT|  Statement create or replace table amit (x int, y int);
+admin| (stmt : 1)| adminT|  Connection id - 0 - Executing - create or replace table amit (x int, y int);
+admin| (stmt : 1) | adminT|  Connection id - 0
+admin| (stmt : 1) | adminT|  End Time - 2018-11-06 16:52:15
+admin| (stmt : 1) | adminT|  Success
+admin| (stmt : 2) | adminT|  Connection id - 0
+admin| (stmt : 2) | adminT|  Start Time - 2018-11-06 16:52:19
+admin| (stmt : 2) | adminT|  Statement create table amit (x int, y int);
+admin| (stmt : 2) | adminT|  Connection id - 0
+admin| (stmt : 2) | adminT|  End Time - 2018-11-06 16:52:22
+admin| (stmt : 2) | adminT|  SQL - Can't create table 'public.amit' - a table with the same name already exists
+admin| (stmt : 2) | adminT|  Failed
