@@ -3,27 +3,43 @@ from datetime import datetime
 
 
 class Event:
-    def __init__(self, start, statement: str, end, success):
+    """
+    Class isn't necessary, and longer than other solutions.
+    But class gives you more control when expansion / changes are needed.
+    """
+    def __init__(self, start, statement, end, success):
         self.start = re.search(r"[0-9]{4}.*", start).group(0)
-        self.statement = statement.replace("Statement ", "").strip(";\n")
+        self.statement = re.search(r"(?<=\()[^)]*", statement).group(0)
         self.end = re.search(r"[0-9]{4}.*", end).group(0)
-        self.success = success
+        self.success = success.split()[-1]
 
     def __repr__(self):
+        """
+        When str() or print() is called on this class instances -
+        this will be output.
+        """
         return f"Event starting at {self.start}, Took {self.deltaTime} sec."
 
     @property
     def deltaTime(self):
-        form = "%Y-%m-%d %H:%M:%S"
-        start = datetime.strptime(self.start, form)
-        end = datetime.strptime(self.end, form)
+        """
+        Converting string to datetime object to perform delta time calculation.
+        """
+        date_format = "%Y-%m-%d %H:%M:%S"
+        start = datetime.strptime(self.start, date_format)
+        end = datetime.strptime(self.end, date_format)
         return (end - start).total_seconds()
 
 
 def generate_events(file):
     def lineYield():
+        """
+        Generates line inside file without need to load whole file in memory.
+        As generator is one-shot, using this to simplify pause / continue of
+        line iteration.
+        """
         for line_ in file:
-            yield line_.split("|  ")[-1].strip("\n")
+            yield line_.strip("\n")
 
     find_list = ["Start Time", "Statement", "End Time"]
     generator = lineYield()
@@ -31,7 +47,7 @@ def generate_events(file):
     while True:
         group = []
         for target in find_list:
-            for line in generator:
+            for line in generator:  # our generator keeps state after this loop.
                 if target in line:
                     group.append(line)
                     break
@@ -56,7 +72,7 @@ def find_slowest(log_file):
         print(output)
 
     late_runner = sorted_output[-1]
-    print(f"\nSlowest: {late_runner.statement}")
+    print(f"\nSlowest: <{late_runner.statement}>")
     print(f"Took   : {late_runner.deltaTime} sec")
     print(f"Status : {late_runner.success}")
 
