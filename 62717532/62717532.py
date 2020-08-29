@@ -2,7 +2,7 @@ from openpyxl import load_workbook
 from datetime import datetime
 
 
-work_book = load_workbook("/62717532/source.xlsx")
+work_book = load_workbook("source.xlsx")
 work_sheet = work_book.active
 
 format_ = '%Y-%m-%d'
