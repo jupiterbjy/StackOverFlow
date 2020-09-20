@@ -1,24 +1,45 @@
 from sys import modules
 from os.path import abspath
 from os import getcwd, chdir
+import inspect
 
 from Module import a
 import timeit
 
 
-def get_path(obj):
-    try:
-        return abspath(obj.__file__)
-    except AttributeError:  # it's probably not a module
-        return abspath(modules[obj.__module__].__file__)
+def closure():
+    original_working_dir = abspath(__file__)  # store absolute path for linux
+
+    def _get_path(obj):
+        nonlocal original_working_dir
+
+        try:
+            return abspath(obj.__file__)
+
+        except AttributeError:  # it's probably not a module
+            if obj.__module__ == '__main__':  # check if module is same as local:
+                return abspath(original_working_dir)
+
+            return abspath(modules[obj.__module__].__file__)
+    return _get_path
 
 
-print(f"working directory: {getcwd()}")
-print(get_path(a))
-print(get_path(timeit))
+get_path = closure()
 
-chdir('/')
 
-print(f"working directory: {getcwd()}")
-print(get_path(a))
-print(get_path(timeit))
+def test_func():
+    pass
+
+
+def test_output():
+    print(f"\nworking directory: {getcwd()}")
+    print(f"import from: {get_path(a)}")
+    print(f"simple import: {get_path(timeit)}")
+    print(f"local function: {get_path(test_func)}")
+
+
+if __name__ == '__main__':
+    test_output()
+    chdir('/')
+    test_output()
+    print(inspect.stack())
