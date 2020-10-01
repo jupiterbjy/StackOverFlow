@@ -10,10 +10,10 @@ def a1():
             pass
 
 
-def a2():
-    with open('test.txt', 'r') as f:
-        while _ := f.readline():
-            pass
+# def a2():
+#     with open('test.txt', 'r') as f:
+#         while _ := f.readline():
+#             pass
 
 
 def a3():
@@ -22,22 +22,6 @@ def a3():
             pass
 
 
-def readline_mock(n=None):
-    with open('test.txt', 'r') as f:
-        if n:
-            _ = f.read(n)
-        else:
-            data = ''
-            while t := f.read(1):
-                data += t
-
-                if not t:
-                    break
-
-
-
-# print(timeit.timeit(a1, number=50))
+print(timeit.timeit(a1, number=50))
 # print(timeit.timeit(a2, number=50))
-# print(timeit.timeit(a3, number=50))
-
-print(timeit.timeit(readline_mock))
+print(timeit.timeit(a3, number=50))
